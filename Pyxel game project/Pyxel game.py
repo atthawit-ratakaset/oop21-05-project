@@ -58,7 +58,7 @@ class App:
         self.sky1 = [(10, 25), (70, 35), (120, 15)]
         self.floor = [(i * 60, randint(8, 104), True) for i in range(4)]
         self.foods = [(i * 60, randint(5, 104), randint(0, 2), True) for i in range(4)]
-        self.boom = [(i * 40, randint(0, 90), randint(0, 1), True) for i in range(2)]
+        self.bomb = [(i * 40, randint(0, 90), randint(0, 1), True) for i in range(2)]
 
         pyxel.playm(1, loop=True)
         pyxel.run(self.update, self.draw)
@@ -93,8 +93,8 @@ class App:
             self.floor[i] = self.update_floor(*v)
         for i, v in enumerate(self.foods):
             self.foods[i] = self.update_foods(*v)
-        for i, v in enumerate(self.boom):
-            self.boom[i] = self.update_boom(*v)
+        for i, v in enumerate(self.bomb):
+            self.bomb[i] = self.update_bomb(*v)
 
     def update_gameover_scene(self):
         if pyxel.btnp(pyxel.KEY_ENTER):
@@ -169,7 +169,7 @@ class App:
 
         return x, y, kind, is_active
 
-    def update_boom(self, x, y, kind, is_active):
+    def update_bomb(self, x, y, kind, is_active):
         if is_active and abs(x - self.player_x) < 12 and abs(y - self.player_y) < 12:
             is_active = False
             self.score -= 80
@@ -220,7 +220,7 @@ class App:
         pyxel.text(38, 50, '--How to count score--', pyxel.frame_count % 10)
         pyxel.text(15, 60, '** Floor = 20 points **', 1)
         pyxel.text(15, 70, '** All Foods = 100 points **', 1)
-        pyxel.text(15, 80, '** Boom = -80 points **', 1)
+        pyxel.text(15, 80, '** Bomb = -80 points **', 1)
         pyxel.text(15, 110, '==press backspace to return title==', pyxel.frame_count % 10)
 
     def draw_play_scene(self):
@@ -258,7 +258,7 @@ class App:
                 pyxel.blt(x, y, 0, 32 + kind * 16, 0, 16, 16, 12)
 
         #draw boom
-        for x, y, kind, is_active in self.boom:
+        for x, y, kind, is_active in self.bomb:
             if is_active:
                 pyxel.blt(x, y, 0, 96 + kind * 15, 0, 16, 16, 12)
 
@@ -297,6 +297,7 @@ class App:
         pyxel.text(42, 50, f'You got {s}', pyxel.frame_count % 16)
         pyxel.text(20, 60, '===press enter to play again====', 10)
         pyxel.text(12, 70, '==press backspace to return title==', 8)
+        pyxel.text(46, 80, '==press q to quit==', 9)
 
 
 App()
