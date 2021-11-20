@@ -257,7 +257,7 @@ class App:
             if is_active:
                 pyxel.blt(x, y, 0, 32 + kind * 16, 0, 16, 16, 12)
 
-        #draw boom
+        #draw bomb
         for x, y, kind, is_active in self.bomb:
             if is_active:
                 pyxel.blt(x, y, 0, 96 + kind * 15, 0, 16, 16, 12)
@@ -284,6 +284,11 @@ class App:
     def draw_gameover_scene(self):
         pyxel.cls(1)
         pyxel.rect(10, 30, 143, 57, 7)
+
+        offset = pyxel.frame_count % 160
+        for i in range(2):
+            pyxel.blt(i * 160 - offset, 104, 0, 0, 48, 160, 16, 12)
+
         self.rain.draw()
         s = "SCORE {:>4}".format(self.score)
         if self.score > self.high_score:
